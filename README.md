@@ -114,3 +114,7 @@ At this point, you've tried all the basics: you've set up your circuit, seen a f
 3. Make the 'discharge' step slower than the 'chargeup' step in the charge / discharge example
 
 If you finish these, try coming up with your own interactions and seeing if you can program them; again, this is a challenging problem! Work together and ask your instructors for support.
+
+## Further reading
+
+ - **New to microcontrollers?** If you've never worked with circuits, electronics and microcontrollers before and could use more of an introduction, have a look at [Becky Stern](https://beckystern.com/)'s introductory tutorials on [YouTube](https://www.youtube.com/c/BeckyStern).
