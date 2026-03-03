@@ -6,7 +6,7 @@
 
 class FifoBuffer {
 private:
-    static const int MAX_SIZE = 1000; // Maximum size of the buffer
+    static const int MAX_SIZE = 512; // Maximum size of the buffer
     int buffer[MAX_SIZE]; // Array to store the buffer
     int front; // Index of the front element
     int rear; // Index of the rear element
@@ -99,7 +99,7 @@ FifoBuffer buffer;
 
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
-CapacitiveSensor cs_4_2 = CapacitiveSensor(19,21);  // 19, 21 (teensy) or 8 11 (metro) 10M resistor between pins 4 & 2, pin 2 is sensor pin, add a wire and or foil if desired
+CapacitiveSensor cs_4_2 = CapacitiveSensor(8,11);  // 19, 21 (teensy) or 8 11 (metro) 10M resistor between pins 4 & 2, pin 2 is sensor pin, add a wire and or foil if desired
 
 void setup() {
   Serial.begin(9600);
@@ -176,9 +176,11 @@ void loop() {
   } else {
     double mean = buffer.calculateMean();
     double sd = buffer.calculateStandardDeviation();
-    if(abs(reading - mean)/sd < sdcutoff){
+    if((reading - mean)/sd < sdcutoff){ // KM: intentionally don't abs in case we abruptly drop in signal ie after someone hold their hand on it for a long time
       // we're close to background; update the buffer
-      buffer.push(reading);
+      // KM: the trouble with this is if you have a noisy environment, like a lot of near misses on contact,
+      //     you can kill the trigger sensitivity by jacking up the SD
+      //buffer.push(reading);
       onstreak = 0;
       offstreak++;
       cumulative--;
@@ -205,12 +207,12 @@ void loop() {
 
     // part 1: tap to state change
     // 1a. on / off
-    lightup(int((activations%2)==1), 3,0,12);
+    //lightup(int((activations%2)==1), 3,0,12);
     // 1b. state cycle
     //statecycle(activations);
 
     // part 2: charge / discharge
-    //fraction_lightup(cumulative);
+    fraction_lightup(cumulative);
 
     // part 3: push to talk
     // 3a. contact; set sdcutoff to 20
