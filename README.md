@@ -38,7 +38,7 @@ To control the details of how our microcontroller interprets capacitive touch si
 3. Click on the 'Boards Manager' icon on the left of the Arduino IDE (the left column will be titled 'BOARDS MANAGER' when you've chosen the correct one).
 4. Type `metro` in the search box in the boards manager column, and click *INSTALL* under 'Adafruit AVR Boards'. This will install what you need to communicate with your microcontroller.
 
-![board manager IDE settings](arduinoIDEboards.png)
+![board manager IDE settings](arduinoIDEboards.jpg)
 
 5. Next, plug your microcontroller into your laptop with a USB cable. In the Arduino IDE, navigate *Tools -> Board -> Teensy (for Arduino IDE 2.0.4 or later) -> Teensy 2.0*
 6. Also in the Arduino IDE, click on *Tools -> Port*, and select the port under *teensy ports*; there should only be one, and it should be labeled (Teensy 2.0).
