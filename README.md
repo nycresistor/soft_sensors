@@ -21,7 +21,7 @@ For this circuit, you'll need:
 
 Set up your circuit as follows:
 
-![basic captouch circuit](basic-setup_bb.svg)
+![basic captouch circuit](basic-setup-metro.png)
 
 Once everything is hooked up, touch your textile capacitor. If everything is working correctly, your LED ring should turn on and off as you touch the textile, thanks to a simple program pre-loaded onto your microcontroller.
 
