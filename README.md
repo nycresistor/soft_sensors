@@ -100,7 +100,7 @@ So far, everything we've done has relied on being plugged into your computer - b
 
 When complete, your circuit should look like this:
 
-![captouch circuit with no computer](no-computer_bb.svg)
+![captouch circuit with no computer](no-computer.png)
 
 Try touching your capacitive textile - it might not work so well anymore! When you had your circuit plugged into the computer, it was using your computer's electrical ground; without this, the signals coming from the touch sensor and to the LED ring may be unstable and difficult to interpret due to the 'floating ground'. This is what the extra ground wire is for; try gripping it firmly in one hand while touching your sensor with the other, and it should behave much more stably (if you're still having trouble, hit the little reset button on the microcontroller and wait a moment for it to reboot and recalibrate). In something like a costume, this extra ground would be a 'body wire', typically discreetly taped to the skin to provide a stable ground (your body) for the electronics.
 
