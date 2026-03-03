@@ -34,9 +34,9 @@ Once everything is hooked up, touch your textile capacitor. If everything is wor
 To control the details of how our microcontroller interprets capacitive touch signals and translates that to behavior on our LED ring, we're going to program it using the Arduino IDE (integrated development environment - if you've never seen something like this before, this is a tool that lets you write code and send it to your microcontroller in a form it can understand). Setup as follows:
 
 1. Install the Arduino IDE, at least version 2.2.x.
-2. We need to let the Arduino IDE know how to compile software for the teensy. Navigate **Arduino IDE -> Settings**, and under *Additional board manager URLs*, add `https://www.pjrc.com/teensy/package_teensy_index.json` to the list (separated from whatever else is in the list by a comma, if there's anything else there).
+2. We need to let the Arduino IDE know how to compile software for our microcontroller. Navigate **Arduino IDE -> Settings**, and under *Additional board manager URLs*, add `https://adafruit.github.io/arduino-board-index/package_adafruit_index.json` to the list (separated from whatever else is in the list by a comma, if there's anything else there).
 3. Click on the 'Boards Manager' icon on the left of the Arduino IDE (the left column will be titled 'BOARDS MANAGER' when you've chosen the correct one).
-4. Type `teensy` in the search box in the boards manager column, and click *INSTALL* under 'Teensy (for Arduino IDE 2.0.4 or later)'. This will install what you need to communicate with your teensy.
+4. Type `metro` in the search box in the boards manager column, and click *INSTALL* under 'Adafruit AVR Boards'. This will install what you need to communicate with your microcontroller.
 
 ![board manager IDE settings](arduinoIDEboards.png)
 
