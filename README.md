@@ -15,6 +15,7 @@ For this circuit, you'll need:
  - a bunch of jumper wires
  - two double-sided alligator clips
  - a USB cable with the right connections to connect your Metro to your laptop
+ - a breadboard
  - [optional] a battery pack to run everything for projects not meant to be plugged into a wall outlet.
 
 ### Circuit construction
