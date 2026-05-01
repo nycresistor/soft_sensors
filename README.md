@@ -43,7 +43,13 @@ To control the details of how our microcontroller interprets capacitive touch si
 
 5. Next, plug your microcontroller into your laptop with a USB cable. In the Arduino IDE, navigate *Tools -> Board -> Adafruit AVR Boards -> Adafruit Metro*
 6. Also in the Arduino IDE, click on *Tools -> Port*, and select the port for your microcontroller. It can be non-obvious to tell which is the correct port; try unplugging and re-plugging the USB and watch for which port in the list disappears and reappears. That's the one you want.
+
+> Problems on Windows? If you can't access the Ports list on Windows, [this forum post](https://forum.arduino.cc/t/no-ports-discovered-ide-2-3-2-and-windows-11/1293156/5) helps in many cases.
+
 7. At this point, your microcontroller is connected to your computer, and your Arduino IDE knows how to compile code in a way that the microcontroller will understand. Copy the contents of [this arduino code file](metro.ino) to the editor on the right hand side of the Arduino IDE, and click the rightward-pointing arrow near the top left to compile the code and send it to your microcontroller.
+
+> Compile errors? If you get compiler errors like "Can't find CapacitiveSensor.h", you may need to install the library first (a collection of code that serves as a shorthand for doing things like reading capacitive touch sensors or controlling LEDs). In the Arduino IDE, navigate *Sketch -> Include Library -> Manage Libraries*, type in the name of the missing library, and hit *Install* when it pops up in the list. Compilation should be able to then proceed when you hit the *-->* button in the top left again.
+
 8. Finally, in the Arduino IDE, navigate *Tools -> Serial Monitor*. The serial monitor is where you can see your microcontroller sending messages back to your laptop; we'll use this feedback to understand the behavior of our capacitive touch sensor in what follows.
 
 ## Programming different LED behaviors

@@ -3,6 +3,7 @@
 
 #define LED_PIN 2     // which pin is your LED data line plugged into?
 #define LED_COUNT 16  // how many LEDs are in the strip or ring you're driving?
+#define WIDTH 70
 
 class FifoBuffer {
 private:
@@ -99,7 +100,7 @@ FifoBuffer buffer;
 
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
-CapacitiveSensor cs_4_2 = CapacitiveSensor(8,11);  // 19, 21 (teensy) or 8 11 (metro) 10M resistor between pins 4 & 2, pin 2 is sensor pin, add a wire and or foil if desired
+CapacitiveSensor cs_4_2 = CapacitiveSensor(8,11);  // 19, 21 (teensy2) or 8 11 (metro)
 
 void setup() {
   Serial.begin(9600);
@@ -154,6 +155,31 @@ void statecycle(int stateindex) {
   }
 }
 
+String makeLine(int pipePos, int xPos) {
+  pipePos = constrain(pipePos, 0, WIDTH - 1);
+  xPos    = constrain(xPos,    0, WIDTH - 1);
+
+  // Build base string
+  String line = "";
+  for (int i = 0; i < WIDTH; i++) {
+    line += ' ';
+  }
+
+  int left  = min(pipePos, xPos);
+  int right = max(pipePos, xPos);
+
+  // Fill between with underscores (exclusive)
+  for (int i = left + 1; i < right; i++) {
+    line.setCharAt(i, '_');
+  }
+
+  // Place markers
+  line.setCharAt(pipePos, '|');
+  line.setCharAt(xPos, 'X');
+
+  return line;
+}
+
 int activations = 0;
 int cumulative = 0;
 bool on = false;
@@ -176,11 +202,8 @@ void loop() {
   } else {
     double mean = buffer.calculateMean();
     double sd = buffer.calculateStandardDeviation();
-    if((reading - mean)/sd < sdcutoff){ // KM: intentionally don't abs in case we abruptly drop in signal ie after someone hold their hand on it for a long time
+    if((reading - mean)/sd < sdcutoff){ 
       // we're close to background; update the buffer
-      // KM: the trouble with this is if you have a noisy environment, like a lot of near misses on contact,
-      //     you can kill the trigger sensitivity by jacking up the SD
-      //buffer.push(reading);
       onstreak = 0;
       offstreak++;
       cumulative--;
@@ -207,28 +230,30 @@ void loop() {
 
     // part 1: tap to state change
     // 1a. on / off
-    //lightup(int((activations%2)==1), 3,0,12);
+    lightup(int((activations%2)==1), 3,0,12);
     // 1b. state cycle
     //statecycle(activations);
 
     // part 2: charge / discharge
-    fraction_lightup(cumulative);
+    //fraction_lightup(cumulative);
 
     // part 3: push to talk
     // 3a. contact; set sdcutoff to 20
     // 3b. proximity; set sdcutoff to 5
     //lightup(int(on), 3,0,12);
 
-    Serial.print("Reading:  "); 
-    Serial.print(reading);
+    // ascii threshold visualization
+    float maxsd = 200;
+    float cutoff_position = float(sdcutoff)/maxsd*WIDTH;
+    float measurement = (reading - mean)/sd;
+    float meas_position = measurement/maxsd*WIDTH;
+    String s = makeLine(cutoff_position, meas_position);
+    Serial.print(s);
     Serial.print("\t");
-    Serial.print("Average:  ");
-    Serial.print(mean);
-    Serial.print("\t\t");
-    Serial.print("Deviation:  ");
-    Serial.print(sd);
+    Serial.print("Reading [SD]: ");
+    Serial.print(measurement);
     Serial.print("\n");
-
   }
   delay(5);  // arbitrary delay to limit data to serial port    
 }
+
